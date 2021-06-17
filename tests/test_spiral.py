@@ -25,3 +25,11 @@ def test_8():
 
 def test_9():
     verify(str(Spiral(9)))
+
+
+def test_10():
+    verify(str(Spiral(10)))
+
+
+def test_11():
+    verify(str(Spiral(11)))
