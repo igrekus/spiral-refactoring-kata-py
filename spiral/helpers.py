@@ -4,7 +4,7 @@ from spiral.grid import Grid
 
 
 def print_grid(grid: Grid, labels: bool = False) -> str:
-    field_width = max(len(f'{grid.width}'), len(f'{grid.height}'))
+    field_width = 1 if not labels else max(len(f'{grid.width}'), len(f'{grid.height}'))
     all_content = []
 
     if labels:
