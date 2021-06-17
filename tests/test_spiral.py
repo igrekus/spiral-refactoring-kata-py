@@ -33,3 +33,7 @@ def test_10():
 
 def test_11():
     verify(str(Spiral(11)))
+
+
+def test_15():
+    verify(str(Spiral(15)))
