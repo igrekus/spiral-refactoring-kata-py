@@ -4,23 +4,19 @@ from spiral.grid import Grid
 
 
 def print_grid(grid: Grid, labels: bool = False) -> str:
-    field_width = 1 if not labels else max(len(f'{grid.width}'), len(f'{grid.height}'))
-    all_content = []
+    width = 1 if not labels else max(len(f'{grid.width}'), len(f'{grid.height}'))
 
-    if labels:
-        header_row = [''.rjust(field_width, ' ')]
-        for i in range(grid.width):
-            header_row.append(f'{i}'.rjust(field_width, ' '))
-        all_content.append(header_row)
+    all_content = (
+        [[' ' * width] + [f'{i:{width}}' for i in range(grid.width)]]
+        if labels else
+        []
+    )
 
     for j in range(grid.height):
-        row_contents = []
-        if labels:
-            y_coords = f'{j}'.rjust(field_width, ' ')
-            row_contents.append(y_coords)
-        for i in range(grid.width):
-            row_contents.append(grid[i, j].rjust(field_width, ' '))
+        row_contents = [f'{j:{width}} '] if labels else []
+        row_contents += [f'{grid[i, j]:{width}}' for i in range(grid.width)]
         all_content.append(row_contents)
+
     return '\n'.join(' '.join(row) for row in all_content).rstrip()
 
 
