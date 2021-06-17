@@ -8,18 +8,18 @@ def print_grid(grid: Grid, labels: bool = False) -> str:
     all_content = []
 
     if labels:
-        header_row = [''.ljust(field_width, ' ')]
+        header_row = [''.rjust(field_width, ' ')]
         for i in range(grid.width):
-            header_row.append(f'{i}'.ljust(field_width, ' '))
+            header_row.append(f'{i}'.rjust(field_width, ' '))
         all_content.append(header_row)
 
     for j in range(grid.height):
         row_contents = []
         if labels:
-            y_coords = f'{j}'.ljust(field_width, ' ')
+            y_coords = f'{j}'.rjust(field_width, ' ')
             row_contents.append(y_coords)
         for i in range(grid.width):
-            row_contents.append(grid[i, j].ljust(field_width, ' '))
+            row_contents.append(grid[i, j].rjust(field_width, ' '))
         all_content.append(row_contents)
     return '\n'.join(' '.join(row) for row in all_content).rstrip()
 
