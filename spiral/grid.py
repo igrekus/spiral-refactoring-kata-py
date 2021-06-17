@@ -7,5 +7,5 @@ class Grid:
     def height(self):
         raise NotImplementedError
 
-    def content_at(self, x: int, y: int) -> str:
+    def __getitem__(self, item):
         raise NotImplementedError
