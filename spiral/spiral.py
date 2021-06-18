@@ -16,6 +16,9 @@ class Spiral(Grid):
         return self._size
 
     def __getitem__(self, item):
+        if isinstance(item, int):
+            return self._spiral[item]
+
         if len(item) == 2 and all(isinstance(i, int) for i in item):
             x, y = item
             return '' if not self._spiral else f'{self._spiral[y][x]}'

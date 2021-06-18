@@ -4,20 +4,20 @@ from spiral.grid import Grid
 
 
 def print_grid(grid: Grid, labels: bool = False) -> str:
-    width = 1 if not labels else max(len(f'{grid.width}'), len(f'{grid.height}'))
+    pad = 1 if not labels else max(len(f'{grid.width}'), len(f'{grid.height}'))
 
-    all_content = (
-        [[' ' * width] + [f'{i:{width}}' for i in range(grid.width)]]
-        if labels else
-        []
-    )
-
-    for j in range(grid.height):
-        row_contents = [f'{j:{width}} '] if labels else []
-        row_contents += [f'{grid[i, j]:{width}}' for i in range(grid.width)]
-        all_content.append(row_contents)
+    all_content = _header(grid.width, pad, labels) + \
+                  [_row(i, row, pad, labels) for i, row in enumerate(grid)]
 
     return '\n'.join(' '.join(row) for row in all_content).rstrip()
+
+
+def _header(width, pad, labels=False):
+    return [[' ' * pad] + [f'{i:{pad}}' for i in range(width)]] if labels else []
+
+
+def _row(index, row, pad, labels=False):
+    return ([f'{index:{pad}}'] if labels else []) + [f'{v:{pad}}' for v in row]
 
 
 def _fill(arr: List[List[int]], value=1) -> List[List[int]]:
