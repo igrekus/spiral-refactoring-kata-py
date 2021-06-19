@@ -43,7 +43,6 @@ def _build_spiral(size: int) -> List[List[int]]:
     y = 1
     dir_x = 1
     dir_y = 0
-    i = 0
     left_border = 0
     right_border = width - 1
     upper_border = 0
@@ -80,5 +79,4 @@ def _build_spiral(size: int) -> List[List[int]]:
 
         x += dir_x
         y += dir_y
-        i += 1
     return fill
