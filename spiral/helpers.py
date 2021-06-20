@@ -20,13 +20,12 @@ def _row(index, row, pad, labels=False):
     return ([f'{index:{pad}}'] if labels else []) + [f'{v:{pad}}' for v in row]
 
 
-def _fill(arr: List[List[int]], value=1) -> List[List[int]]:
-    return [[value for _ in row] for row in arr]
+def _fill(rows, cols, value=1) -> List[List[int]]:
+    return [[value] * cols for _ in range(rows)]
 
 
 def _build_spiral(size: int) -> List[List[int]]:
-    arr = [[0] * size for _ in range(size)]
-    fill = _fill(arr)
+    fill = _fill(size, size)
     height: int = len(fill)
     width: int = len(fill[0])
     last_y = height // 2
