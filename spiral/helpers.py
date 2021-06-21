@@ -26,13 +26,14 @@ def _fill(rows, cols, value=1) -> List[List[int]]:
 
 def _build_spiral(size: int) -> List[List[int]]:
     fill = _fill(size, size)
-    last_y = len(fill) // 2
-    last_x = (len(fill[0]) // 2 - 1) if len(fill[0]) % 2 == 0 else len(fill[0]) // 2
 
-    if len(fill) == 5:
+    last_y = size // 2
+    last_x = (size // 2 - 1) if size % 2 == 0 else size // 2
+
+    if size == 5:
         last_x = 1
         last_y = 3
-    elif (len(fill) - 5) % 4 == 0:
+    elif (size - 5) % 4 == 0:
         last_x -= 1
         last_y += 1
 
@@ -41,9 +42,9 @@ def _build_spiral(size: int) -> List[List[int]]:
     dir_x = 1
     dir_y = 0
     left_border = 0
-    right_border = len(fill[0]) - 1
+    right_border = size - 1
     upper_border = 0
-    lower_border = len(fill) - 1
+    lower_border = size - 1
 
     while True:
         if x == right_border and y == upper_border + 1:
