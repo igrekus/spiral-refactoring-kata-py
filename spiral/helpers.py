@@ -59,13 +59,13 @@ def _build_spiral(size: int) -> List[List[int]]:
             dir_x = 0
             dir_y = -1
             lower_border -= 2
-        elif y == lower_border and x == right_border - 1:
+        elif x == right_border - 1 and y == lower_border:
             y -= 1
             x -= 1
             dir_x = -1
             dir_y = 0
             right_border -= 2
-        elif y == upper_border and x == left_border + 1:
+        elif x == left_border + 1 and y == upper_border:
             y += 1
             x += 1
             dir_x = 1
