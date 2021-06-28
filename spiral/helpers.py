@@ -4,42 +4,36 @@ from spiral.grid import Grid
 
 
 def print_grid(grid: Grid, labels: bool = False) -> str:
-    field_width = 1 if not labels else max(len(f'{grid.width}'), len(f'{grid.height}'))
-    all_content = []
+    pad = 1 if not labels else max(len(f'{grid.width}'), len(f'{grid.height}'))
 
-    if labels:
-        header_row = [''.rjust(field_width, ' ')]
-        for i in range(grid.width):
-            header_row.append(f'{i}'.rjust(field_width, ' '))
-        all_content.append(header_row)
+    all_content = _header(grid.width, pad, labels) + \
+                  [_row(i, row, pad, labels) for i, row in enumerate(grid)]
 
-    for j in range(grid.height):
-        row_contents = []
-        if labels:
-            y_coords = f'{j}'.rjust(field_width, ' ')
-            row_contents.append(y_coords)
-        for i in range(grid.width):
-            row_contents.append(grid[i, j].rjust(field_width, ' '))
-        all_content.append(row_contents)
     return '\n'.join(' '.join(row) for row in all_content).rstrip()
 
 
-def _fill(arr: List[List[int]], value=1) -> List[List[int]]:
-    return [[value for _ in row] for row in arr]
+def _header(width, pad, labels=False):
+    return [[' ' * pad] + [f'{i:{pad}}' for i in range(width)]] if labels else []
+
+
+def _row(index, row, pad, labels=False):
+    return ([f'{index:{pad}}'] if labels else []) + [f'{v:{pad}}' for v in row]
+
+
+def _fill(rows, cols, value=1) -> List[List[int]]:
+    return [[value] * cols for _ in range(rows)]
 
 
 def _build_spiral(size: int) -> List[List[int]]:
-    arr = [[0] * size for _ in range(size)]
-    fill = _fill(arr)
-    height: int = len(fill)
-    width: int = len(fill[0])
-    last_y = height // 2
-    last_x = (width // 2 - 1) if width % 2 == 0 else width // 2
+    fill = _fill(size, size)
 
-    if height == 5:
+    last_y = size // 2
+    last_x = (size // 2 - 1) if size % 2 == 0 else size // 2
+
+    if size == 5:
         last_x = 1
         last_y = 3
-    elif (height - 5) % 4 == 0:
+    elif (size - 5) % 4 == 0:
         last_x -= 1
         last_y += 1
 
@@ -47,11 +41,10 @@ def _build_spiral(size: int) -> List[List[int]]:
     y = 1
     dir_x = 1
     dir_y = 0
-    i = 0
     left_border = 0
-    right_border = width - 1
+    right_border = size - 1
     upper_border = 0
-    lower_border = height - 1
+    lower_border = size - 1
 
     while True:
         if x == right_border and y == upper_border + 1:
@@ -66,13 +59,13 @@ def _build_spiral(size: int) -> List[List[int]]:
             dir_x = 0
             dir_y = -1
             lower_border -= 2
-        elif y == lower_border and x == right_border - 1:
+        elif x == right_border - 1 and y == lower_border:
             y -= 1
             x -= 1
             dir_x = -1
             dir_y = 0
             right_border -= 2
-        elif y == upper_border and x == left_border + 1:
+        elif x == left_border + 1 and y == upper_border:
             y += 1
             x += 1
             dir_x = 1
@@ -84,5 +77,4 @@ def _build_spiral(size: int) -> List[List[int]]:
 
         x += dir_x
         y += dir_y
-        i += 1
     return fill
